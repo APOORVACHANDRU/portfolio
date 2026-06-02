@@ -107,10 +107,16 @@ When I'm not coding, I'm contributing to open source, writing technical articles
   ],
 
   certifications: [
-    { name: 'AWS Certified Cloud Practitioner',       date: 'Jan 2024', url: 'https://www.credly.com/badges/YOUR_BADGE_ID' },
-    { name: 'AWS Certified Solutions Architect',      date: 'Mar 2024', url: 'https://www.credly.com/badges/YOUR_BADGE_ID' },
-    { name: 'Meta Front-End Developer Certificate',   date: 'Jun 2023', url: 'https://www.coursera.org/account/accomplishments/YOUR_ID' },
-    { name: 'Docker Certified Associate',             date: 'Sep 2023', url: 'https://www.credly.com/badges/YOUR_BADGE_ID' },
+    { name: 'Ultimate AWS Certified Developer Associate 2026 DVA-C02',  date: 'Oct 2025', url: 'https://www.udemy.com/certificate/UC-5d1b61bc-91cf-4788-8f99-f818000c4632/' },
+    { name: 'Getting Started with TypeScript // A Javascript Compiler', date: 'Dec 2023', url: 'https://www.udemy.com/certificate/UC-f33f8786-914f-4aa9-ac58-6e3e542ff9e1/' },
+    { name: 'JavaScript and ES6 Challenges',   date: 'Aug 2023', url: 'https://www.udemy.com/certificate/UC-3821ee8e-3b41-4ebf-873d-23cc48db038c/' },
+    { name: 'Dutch Level 1.1 (NT2)',           date: '2024',     url: '' },
+    { name: 'Dutch Level 1.2 (NT2)',           date: '2024',     url: '' },
+  ],
+
+  languages: [
+    { name: 'English', level: 'Fluent', detail: 'Spoken and Written' },
+    { name: 'Dutch',   level: 'Basic',  detail: 'Basic proficiency (spoken and written); currently pursuing level 2.1' },
   ],
 
   // This is fed to the AI chatbot as context

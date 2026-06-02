@@ -5,6 +5,7 @@ import Skills          from '@/components/Skills'
 import Experience      from '@/components/Experience'
 import Projects        from '@/components/Projects'
 import Certifications  from '@/components/Certifications'
+import Languages       from '@/components/Languages'
 import Contact         from '@/components/Contact'
 import Footer          from '@/components/Footer'
 import Chatbot         from '@/components/Chatbot'
@@ -20,6 +21,7 @@ export default function Home() {
         <Experience />
         <Projects />
         <Certifications />
+        <Languages />
         <Contact />
       </main>
       <Footer />

@@ -12,6 +12,7 @@ const navLinks = [
   { label: 'Projects',       href: '#projects'       },
   { label: 'Certifications', href: '#certifications' },
   { label: 'Contact',        href: '#contact'        },
+  { label: 'Blog',           href: '/blogs'          },
 ]
 
 export default function Navbar() {
@@ -26,6 +27,10 @@ export default function Navbar() {
 
   const handleNavClick = (href: string) => {
     setIsOpen(false)
+    if (href.startsWith('/')) {
+      window.location.href = href
+      return
+    }
     const el = document.querySelector(href)
     el?.scrollIntoView({ behavior: 'smooth' })
   }

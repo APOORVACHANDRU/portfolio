@@ -1,6 +1,8 @@
 # 🚀 Apoorva Chandrashekar — Developer Portfolio
 
-A personal developer portfolio with an AI chatbot powered by OpenAI, deployed for free on Vercel.
+A personal developer portfolio with an AI chatbot powered by OpenAI and a blog for technical articles, deployed for free on Vercel.
+
+**Live:** [portfolio-three-lemon-51.vercel.app](https://portfolio-three-lemon-51.vercel.app)
 
 ![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
@@ -14,9 +16,11 @@ A personal developer portfolio with an AI chatbot powered by OpenAI, deployed fo
 
 - **Dark-themed responsive design** — desktop, tablet, and mobile
 - **AI Chatbot** — floating chat widget powered by OpenAI GPT-4o-mini with rate limiting
+- **Blog** — separate `/blogs` route with cover images, tags, and full article pages
 - **Interactive skills** — clickable badges with official icons linking to documentation
 - **Experience timeline** — bullet-point descriptions with tech tags
 - **Certifications** — clickable cards that open verified credentials
+- **Languages** — spoken language proficiency with level badges
 - **Contact form** — pre-fills and opens your email client (no backend needed)
 - **SEO optimized** — metadata, Open Graph, Twitter cards
 - **Full test suite** — 41 unit tests + Playwright E2E tests
@@ -34,9 +38,9 @@ npm install
 
 ### 2. Configure your info
 
-Edit `src/lib/portfolio-data.ts` — update your name, bio, experience, projects, and certifications.
-
-Edit `src/lib/skills-data.ts` — add/remove skills with icons and URLs.
+- `src/lib/portfolio-data.ts` — name, bio, experience, projects, certifications, languages
+- `src/lib/skills-data.ts` — skills with icons and URLs
+- `src/lib/blog-data.ts` — blog articles with cover images
 
 ### 3. Add your OpenAI API key
 
@@ -44,8 +48,6 @@ Edit `src/lib/skills-data.ts` — add/remove skills with icons and URLs.
 # .env.local
 OPENAI_API_KEY=sk-proj-your-key-here
 ```
-
-Get your key at [platform.openai.com/api-keys](https://platform.openai.com/api-keys).
 
 ### 4. Add your assets
 
@@ -61,61 +63,6 @@ npm run dev
 
 ---
 
-## Deploy to Vercel (Free)
-
-### Option 1 — One-click deploy
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/APOORVACHANDRU/portfolio)
-
-### Option 2 — Manual setup
-
-1. Push your repo to GitHub
-2. Go to [vercel.com](https://vercel.com) → sign in with GitHub
-3. Click **"Add New Project"** → import your `portfolio` repo
-4. Add environment variable: `OPENAI_API_KEY` = your key
-5. Click **Deploy**
-
-That's it. Vercel gives you:
-- Automatic deploys on every `git push` to `main`
-- Preview deploys for pull requests
-- Global edge CDN
-- Free SSL + custom domain support
-- Serverless API routes (chatbot works out of the box)
-
-### Custom domain (optional)
-
-1. In Vercel dashboard → Settings → Domains
-2. Add your domain (e.g. `apoorva.dev`)
-3. Update your DNS records as instructed
-
----
-
-## Testing
-
-### Unit Tests (Vitest)
-
-```bash
-npm test              # Single run (41 tests)
-npm run test:watch    # Watch mode
-npm run test:coverage # With coverage report
-```
-
-### E2E Tests (Playwright)
-
-```bash
-npx playwright install   # First time only
-npm run test:e2e         # Run E2E tests
-npm run test:e2e:ui      # Interactive UI
-```
-
-### All tests
-
-```bash
-npm run test:all
-```
-
----
-
 ## Project Structure
 
 ```
@@ -123,6 +70,9 @@ Portfolio/
 ├── src/
 │   ├── app/
 │   │   ├── api/chat/route.ts       # AI chatbot API (rate-limited)
+│   │   ├── blogs/
+│   │   │   ├── page.tsx            # Blog list page
+│   │   │   └── [slug]/page.tsx     # Individual article page
 │   │   ├── layout.tsx
 │   │   ├── page.tsx
 │   │   └── globals.css
@@ -134,21 +84,72 @@ Portfolio/
 │   │   ├── Experience.tsx
 │   │   ├── Projects.tsx
 │   │   ├── Certifications.tsx
+│   │   ├── Languages.tsx
 │   │   ├── Contact.tsx
 │   │   ├── Footer.tsx
 │   │   └── Chatbot.tsx
 │   ├── lib/
-│   │   ├── portfolio-data.ts       # ← Your content here
+│   │   ├── portfolio-data.ts       # Portfolio content
 │   │   ├── skills-data.ts          # Skills with icons + URLs
+│   │   ├── blog-data.ts            # Blog articles
 │   │   └── utils.ts
-│   └── __tests__/
-├── e2e/
-│   └── portfolio.spec.ts
+│   └── __tests__/                  # Unit tests
+├── e2e/                            # Playwright E2E tests
 ├── public/
 │   ├── avatar.jpeg
 │   └── resume.pdf
 ├── .github/workflows/ci.yml        # Lint + test CI
 └── .env.local                       # API keys (not committed)
+```
+
+---
+
+## Blog
+
+The blog lives at `/blogs` as a separate route (not on the main page).
+
+**To add a new article**, edit `src/lib/blog-data.ts`:
+
+```ts
+{
+  title: 'Your Article Title',
+  slug:  'your-article-slug',
+  date:  '2026-03-01',
+  excerpt: 'Short summary...',
+  tags: ['Tag1', 'Tag2'],
+  readingTime: '4 min read',
+  coverImage: 'https://images.unsplash.com/photo-xxxx?w=1200&h=600&fit=crop',
+  content: `
+## Your Heading
+
+Your content with **bold**, \`code\`, and bullet points.
+
+- Point one
+- Point two
+  `,
+},
+```
+
+---
+
+## Deploy to Vercel (Free)
+
+1. Push your repo to GitHub
+2. Go to [vercel.com](https://vercel.com) → import your repo
+3. Add environment variable: `OPENAI_API_KEY` = your key
+4. Click **Deploy**
+
+Every `git push` to `main` auto-deploys. Preview URLs for PRs. Free SSL + custom domain support.
+
+---
+
+## Testing
+
+```bash
+npm test              # Unit tests (41 tests)
+npm run test:watch    # Watch mode
+npm run test:e2e      # Playwright E2E tests
+npm run test:all      # All tests
 ```
 
 ---
@@ -161,7 +162,7 @@ Portfolio/
 | `npm run build`        | Production build               |
 | `npm run start`        | Production server              |
 | `npm run lint`         | ESLint                         |
-| `npm test`            | Unit tests                     |
+| `npm test`             | Unit tests                     |
 | `npm run test:watch`   | Unit tests (watch)             |
 | `npm run test:coverage`| Unit tests + coverage          |
 | `npm run test:e2e`     | Playwright E2E tests           |
@@ -171,11 +172,11 @@ Portfolio/
 
 ## Cost
 
-| Service           | Monthly Cost |
-|-------------------|--------------|
-| Vercel hosting    | **$0** (free tier) |
-| OpenAI GPT-4o-mini| ~$0.50–2 (portfolio traffic) |
-| **Total**         | **~$0–2/month** |
+| Service            | Monthly Cost              |
+|--------------------|---------------------------|
+| Vercel hosting     | **$0** (free tier)        |
+| OpenAI GPT-4o-mini | ~$0.50–2 (portfolio traffic) |
+| **Total**          | **~$0–2/month**           |
 
 ---
 

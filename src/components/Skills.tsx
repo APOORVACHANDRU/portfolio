@@ -52,7 +52,7 @@ export default function Skills() {
   return (
     <section id="skills" className="section-padding">
       <div className="container-max">
-        <p className="text-primary-400 font-mono text-sm mb-3">02. skills</p>
+        <p className="text-primary-400 font-mono text-sm mb-3">Skills</p>
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
           What I work with
         </h2>
