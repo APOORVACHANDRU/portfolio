@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import OpenAI from 'openai'
 import { checkRateLimit } from '@/lib/utils'
 import { portfolioData } from '@/lib/portfolio-data'
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
-
-const MAX_MESSAGES = 20   // max conversation history to send
+const MAX_MESSAGES = 20
 const MAX_RPM      = parseInt(process.env.RATE_LIMIT_RPM ?? '10', 10)
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
   try {
@@ -48,11 +46,15 @@ export async function POST(req: NextRequest) {
       .filter((m) => m.role && m.content && typeof m.content === 'string')
       .map((m) => ({
         role:    m.role as 'user' | 'assistant',
-        content: m.content.slice(0, 2000), // cap per-message length
+        content: m.content.slice(0, 2000),
       }))
 
+    // Dynamic import to avoid build-time initialization issues
+    const OpenAI = (await import('openai')).default
+    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+
     const response = await client.chat.completions.create({
-      model:      'gpt-4o-mini',   // cheap, fast, smart — swap to gpt-4o if you want more power
+      model:      'gpt-4o-mini',
       max_tokens: 512,
       messages: [
         { role: 'system', content: portfolioData.chatbotContext },
@@ -66,6 +68,7 @@ export async function POST(req: NextRequest) {
   } catch (error: unknown) {
     console.error('[Chat API Error]', error)
 
+    const OpenAI = (await import('openai')).default
     if (error instanceof OpenAI.APIError) {
       if (error.status === 401) {
         return NextResponse.json({ error: 'Invalid API key.' }, { status: 401 })
