@@ -100,7 +100,7 @@ When I'm not coding, I'm contributing to open source, writing technical articles
       description: 'My personal developer portfolio built with Next.js 14, Tailwind CSS, and Framer Motion. Features a dark-themed responsive design, an AI chatbot powered by OpenAI GPT-4o-mini, a contact form with mailto integration, and full AWS deployment infrastructure with CDK (ECS Fargate + CloudFront). Includes CI/CD via GitHub Actions.',
       tech:        ['Next.js', 'TypeScript', 'Tailwind CSS', 'OpenAI API', 'AWS CDK', 'Docker', 'GitHub Actions'],
       github:      'https://github.com/APOORVACHANDRU/portfolio',
-      live:        null,
+      live:        'https://portfolio-three-lemon-51.vercel.app/',
       featured:    true,
       image:       null,
     },

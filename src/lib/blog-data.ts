@@ -128,42 +128,165 @@ Learn to recognize risks, use AI ethically, and apply basic principles of respon
     `.trim(),
   },
   {
-    title: 'Building a Portfolio with Next.js, Tailwind, and an AI Chatbot',
+    title: 'Building a Modern Developer Portfolio with AI Chat, Blog, and Free Deployment on Vercel',
     slug:  'building-portfolio-nextjs-ai-chatbot',
     date:  '2026-01-15',
-    excerpt: 'How I built this portfolio site with Next.js 14 App Router, Tailwind CSS, and integrated an AI chatbot powered by OpenAI GPT-4o-mini.',
-    tags: ['Next.js', 'TypeScript', 'OpenAI', 'Tailwind CSS'],
-    readingTime: '5 min read',
+    excerpt: 'A developer portfolio today is more than just a personal website. It combines personal branding, technical showcase, and interactive experience — powered by Next.js, TypeScript, Tailwind CSS, OpenAI, and deployed for free on Vercel.',
+    tags: ['Next.js', 'TypeScript', 'OpenAI', 'Tailwind CSS', 'Vercel'],
+    readingTime: '7 min read',
     coverImage: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=600&fit=crop',
     content: `
-## Why I built this
+## 🚀 Building a Modern Developer Portfolio with AI Chat, Blog, and Free Deployment on Vercel
 
-After years of working across multiple companies and tech stacks, I wanted a portfolio that truly represents my skills — not just a static page, but something interactive with real engineering behind it.
+A developer portfolio today is more than just a personal website. It's a combination of personal branding, technical showcase, and interactive experience. In this project, I built a modern full-stack portfolio powered by Next.js, TypeScript, Tailwind CSS, and OpenAI, complete with a blog system and an AI chatbot — and deployed it entirely for free using Vercel.
 
-## The Stack
+## 🌐 Live Application
 
-- **Next.js 14** with App Router for server-side rendering and API routes
-- **Tailwind CSS** for rapid styling with a custom dark theme
-- **OpenAI GPT-4o-mini** for the chatbot — cheap, fast, and smart enough
-- **Vercel** for deployment — zero config, free tier
+The portfolio is deployed and publicly accessible here:
 
-## Key Decisions
+- **Live URL:** https://portfolio-three-lemon-51.vercel.app
 
-### AI Chatbot with Rate Limiting
+It demonstrates a production-ready setup with CI/CD, testing, SEO optimization, and real-world architecture patterns.
 
-The chatbot uses a system prompt loaded from \`portfolio-data.ts\` so it knows about my experience. I added in-memory rate limiting (10 req/min per IP) to prevent abuse.
+## ✨ Key Features
 
-### Skills with Clickable Icons
+This portfolio goes beyond a static resume site. It includes several advanced features:
 
-Each skill badge links to its official documentation and shows the logo from devicon CDN. Specializations are rendered as static badges.
+### 🤖 AI Chatbot
 
-### Contact Form without a Backend
+A floating chat widget powered by OpenAI GPT-4o-mini that allows users to interact with the portfolio in real time. It includes rate limiting to ensure safe and controlled usage.
 
-Instead of building a form backend, I use a \`mailto:\` link that pre-fills the subject and body. Zero cost, zero maintenance.
+### 📝 Blog System
 
-## Deployment
+A dedicated /blogs section where technical articles are displayed with:
 
-Vercel handles everything — automatic deploys on git push, preview URLs for PRs, and edge CDN globally. Total cost: $0/month for hosting.
+- Cover images
+- Tags
+- Reading time
+- Individual article pages using dynamic routing
+
+### 🎨 Modern UI/UX
+
+- Dark-themed responsive design
+- Mobile, tablet, and desktop optimized layout
+- Clean and minimal interface using Tailwind CSS
+
+### 🧩 Interactive Components
+
+- Clickable skill badges linking to documentation
+- Experience timeline with structured tech tags
+- Certification cards linking to verified credentials
+- Language proficiency indicators
+
+### 📩 Contact System
+
+A lightweight contact form that opens the user's email client directly — no backend required.
+
+### 🔍 SEO Optimization
+
+- Metadata configuration
+- Open Graph support
+- Twitter card integration for better sharing
+
+### 🧪 Testing Suite
+
+- 41 unit tests
+- End-to-end testing using Playwright
+- Full CI pipeline integrated with GitHub Actions
+
+## 🏗️ Architecture Overview
+
+The project follows a modular Next.js App Router structure:
+
+- **/app** → Pages, API routes, routing logic
+- **/components** → Reusable UI components
+- **/lib** → Static data (portfolio, blog, skills)
+- **/__tests__** → Unit tests
+- **/e2e** → Playwright end-to-end tests
+
+The blog system is built using dynamic routes, where each article is defined in a central data file.
+
+## 🧠 AI Integration
+
+The chatbot is powered by OpenAI's GPT-4o-mini model. It is implemented via a secure API route:
+
+- **API endpoint:** /api/chat
+- Rate-limited for safety
+- Environment variable-based API key management
+
+This allows the portfolio to act as a smart assistant, not just a static site.
+
+## 📝 Adding Blog Articles
+
+Blog content is managed through a simple structured format. Each article includes:
+
+- Title
+- Slug
+- Date
+- Excerpt
+- Tags
+- Reading time
+- Cover image
+- Markdown-style content
+
+This approach keeps content management simple while maintaining flexibility.
+
+## 🚀 Deployment with Vercel
+
+The entire application is deployed using Vercel's free tier.
+
+**Deployment flow:**
+
+- Push code to GitHub
+- Import repository into Vercel
+- Add environment variables (e.g., OpenAI API key)
+- Deploy automatically
+
+Every push to the main branch triggers a new deployment, and pull requests generate preview URLs automatically.
+
+## 💰 Cost Breakdown
+
+One of the highlights of this project is its extremely low operational cost:
+
+- **Vercel Hosting:** $0 (free tier)
+- **OpenAI API Usage:** ~$0.50 – $2/month
+- **Total:** ~$0 – $2/month
+
+This makes it an excellent example of a production-grade portfolio at near-zero cost.
+
+## 📦 Tech Stack
+
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- OpenAI API
+- Playwright (E2E testing)
+- Vitest (unit testing)
+- Vercel (deployment platform)
+
+## 📁 Project Highlights
+
+- Fully responsive portfolio website
+- AI-powered chatbot integration
+- Blog system with dynamic routing
+- Modular and scalable architecture
+- Full testing coverage (unit + E2E)
+- CI/CD pipeline with GitHub Actions
+- Optimized for SEO and performance
+
+## 🎯 Final Thoughts
+
+This project demonstrates how modern web technologies can be combined to build more than just a portfolio — but a full interactive developer platform.
+
+It brings together:
+
+- Frontend engineering
+- Backend API design
+- AI integration
+- DevOps practices
+- Production deployment workflows
+
+All packaged into a single, lightweight, and scalable application.
     `.trim(),
   },
 ]
