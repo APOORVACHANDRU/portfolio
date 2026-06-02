@@ -1,51 +1,28 @@
-# 🚀 Personal Developer Portfolio
+# 🚀 Apoorva Chandrashekar — Developer Portfolio
 
-A production-ready personal portfolio with an AI chatbot powered by Anthropic Claude, deployed on AWS with CI/CD.
+A personal developer portfolio with an AI chatbot powered by OpenAI, deployed for free on Vercel.
 
-## Stack
+![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?logo=tailwindcss)
+![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-412991?logo=openai)
+![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000?logo=vercel)
 
-| Layer      | Technology                              |
-|------------|-----------------------------------------|
-| Frontend   | Next.js 14 (App Router) + TypeScript    |
-| Styling    | Tailwind CSS + Framer Motion            |
-| AI Chatbot | Anthropic Claude 3 Haiku                |
-| Container  | Docker (multi-stage, standalone output) |
-| AWS Infra  | ECS Fargate + ECR + ALB + CloudFront   |
-| IaC        | AWS CDK v2 (TypeScript)                 |
-| CI/CD      | GitHub Actions                          |
+---
 
-## Project Structure
+## Features
 
-```
-Portfolio/
-├── src/
-│   ├── app/
-│   │   ├── api/chat/route.ts   # AI chatbot API (rate-limited)
-│   │   ├── layout.tsx
-│   │   ├── page.tsx
-│   │   └── globals.css
-│   ├── components/
-│   │   ├── Navbar.tsx
-│   │   ├── Hero.tsx
-│   │   ├── About.tsx
-│   │   ├── Skills.tsx
-│   │   ├── Experience.tsx
-│   │   ├── Projects.tsx
-│   │   ├── Contact.tsx
-│   │   ├── Footer.tsx
-│   │   └── Chatbot.tsx         # AI chat widget
-│   └── lib/
-│       ├── portfolio-data.ts   # ← Edit your info here
-│       └── utils.ts
-├── cdk/                        # AWS CDK infrastructure
-│   └── lib/
-│       ├── app.ts
-│       └── portfolio-stack.ts
-├── .github/workflows/
-│   └── deploy.yml              # CI/CD pipeline
-├── Dockerfile
-└── .env.local
-```
+- **Dark-themed responsive design** — desktop, tablet, and mobile
+- **AI Chatbot** — floating chat widget powered by OpenAI GPT-4o-mini with rate limiting
+- **Interactive skills** — clickable badges with official icons linking to documentation
+- **Experience timeline** — bullet-point descriptions with tech tags
+- **Certifications** — clickable cards that open verified credentials
+- **Contact form** — pre-fills and opens your email client (no backend needed)
+- **SEO optimized** — metadata, Open Graph, Twitter cards
+- **Full test suite** — 41 unit tests + Playwright E2E tests
+- **Free deployment** — Vercel with automatic CI/CD on `git push`
+
+---
 
 ## Quick Start
 
@@ -57,18 +34,25 @@ npm install
 
 ### 2. Configure your info
 
-Edit `src/lib/portfolio-data.ts` — update your name, bio, projects, experience, and skills.
+Edit `src/lib/portfolio-data.ts` — update your name, bio, experience, projects, and certifications.
 
-### 3. Add your Anthropic API key
+Edit `src/lib/skills-data.ts` — add/remove skills with icons and URLs.
+
+### 3. Add your OpenAI API key
 
 ```bash
 # .env.local
-ANTHROPIC_API_KEY=sk-ant-your-key-here
+OPENAI_API_KEY=sk-proj-your-key-here
 ```
 
-Get your key at [console.anthropic.com](https://console.anthropic.com).
+Get your key at [platform.openai.com/api-keys](https://platform.openai.com/api-keys).
 
-### 4. Run locally
+### 4. Add your assets
+
+- Profile photo → `public/avatar.jpeg`
+- Resume → `public/resume.pdf`
+
+### 5. Run locally
 
 ```bash
 npm run dev
@@ -77,149 +61,121 @@ npm run dev
 
 ---
 
-## AWS Deployment
+## Deploy to Vercel (Free)
 
-### Prerequisites
+### Option 1 — One-click deploy
 
-- AWS CLI configured (`aws configure`)
-- Docker installed and running
-- Node.js 20+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/APOORVACHANDRU/portfolio)
 
-### Step 1 — Bootstrap CDK (first time only)
+### Option 2 — Manual setup
 
-```bash
-cd cdk
-npm install
-npx cdk bootstrap
-```
+1. Push your repo to GitHub
+2. Go to [vercel.com](https://vercel.com) → sign in with GitHub
+3. Click **"Add New Project"** → import your `portfolio` repo
+4. Add environment variable: `OPENAI_API_KEY` = your key
+5. Click **Deploy**
 
-### Step 2 — Deploy infrastructure
+That's it. Vercel gives you:
+- Automatic deploys on every `git push` to `main`
+- Preview deploys for pull requests
+- Global edge CDN
+- Free SSL + custom domain support
+- Serverless API routes (chatbot works out of the box)
 
-```bash
-npx cdk deploy
-```
+### Custom domain (optional)
 
-This creates:
-- ECR repository
-- VPC with public/private subnets
-- ECS Fargate cluster + service
-- Application Load Balancer
-- CloudFront distribution
-- Secrets Manager secret for the API key
-
-Note the outputs — you'll need the **ECR URI** and **CloudFront URL**.
-
-### Step 3 — Store your Anthropic API key
-
-```bash
-aws secretsmanager put-secret-value \
-  --secret-id portfolio/anthropic-api-key \
-  --secret-string '{"ANTHROPIC_API_KEY":"sk-ant-your-key-here"}'
-```
-
-### Step 4 — Build and push Docker image
-
-```bash
-# Login to ECR
-aws ecr get-login-password --region us-east-1 | \
-  docker login --username AWS --password-stdin <YOUR_ECR_URI>
-
-# Build and push
-docker build -t portfolio .
-docker tag portfolio:latest <YOUR_ECR_URI>:latest
-docker push <YOUR_ECR_URI>:latest
-```
-
-### Step 5 — Force ECS to pull the new image
-
-```bash
-aws ecs update-service \
-  --cluster portfolio-cluster \
-  --service portfolio-service \
-  --force-new-deployment
-```
-
-Your portfolio is now live at the CloudFront URL from Step 2.
+1. In Vercel dashboard → Settings → Domains
+2. Add your domain (e.g. `apoorva.dev`)
+3. Update your DNS records as instructed
 
 ---
 
-## CI/CD (GitHub Actions)
+## Testing
 
-Every push to `main` automatically:
-1. Lints and type-checks the code
-2. Builds and pushes a Docker image to ECR (tagged with commit SHA)
-3. Updates the ECS task definition
-4. Deploys to ECS Fargate with zero-downtime rolling update
+### Unit Tests (Vitest)
 
-### Required GitHub Secrets
-
-Go to **Settings → Secrets and variables → Actions** and add:
-
-| Secret                  | Value                          |
-|-------------------------|--------------------------------|
-| `AWS_ACCESS_KEY_ID`     | IAM user access key            |
-| `AWS_SECRET_ACCESS_KEY` | IAM user secret key            |
-
-### Required GitHub Variables
-
-Go to **Settings → Secrets and variables → Actions → Variables**:
-
-| Variable        | Value                          |
-|-----------------|--------------------------------|
-| `OWNER_NAME`    | Your full name                 |
-| `OWNER_TITLE`   | Your job title                 |
-| `OWNER_EMAIL`   | Your email                     |
-| `GITHUB_URL`    | Your GitHub profile URL        |
-| `LINKEDIN_URL`  | Your LinkedIn profile URL      |
-
-### IAM Permissions for CI/CD
-
-Create an IAM user with these policies:
-- `AmazonEC2ContainerRegistryPowerUser`
-- `AmazonECS_FullAccess`
-
----
-
-## Customization
-
-### Update portfolio content
-
-All content lives in `src/lib/portfolio-data.ts`:
-
-```ts
-export const portfolioData = {
-  personal: { name, title, bio, email, ... },
-  skills:   { frontend, backend, devops, tools },
-  experience: [...],
-  projects:   [...],
-  chatbotContext: '...',  // What the AI knows about you
-}
+```bash
+npm test              # Single run (41 tests)
+npm run test:watch    # Watch mode
+npm run test:coverage # With coverage report
 ```
 
-### Update the AI chatbot persona
+### E2E Tests (Playwright)
 
-Edit the `chatbotContext` string in `portfolio-data.ts`. This is the system prompt fed to Claude — describe yourself, your projects, and how you want the bot to respond.
+```bash
+npx playwright install   # First time only
+npm run test:e2e         # Run E2E tests
+npm run test:e2e:ui      # Interactive UI
+```
 
-### Add a custom domain
+### All tests
 
-In `cdk/lib/portfolio-stack.ts`, add a `domainNames` and `certificate` to the CloudFront distribution. See [CDK docs](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_cloudfront.Distribution.html).
+```bash
+npm run test:all
+```
 
 ---
 
-## Cost Estimate (AWS)
+## Project Structure
 
-| Service          | Estimated Monthly Cost |
-|------------------|------------------------|
-| ECS Fargate      | ~$8–15 (0.25 vCPU, 0.5GB) |
-| ALB              | ~$16                   |
-| CloudFront       | ~$1–2 (low traffic)    |
-| ECR              | ~$0.10                 |
-| Secrets Manager  | ~$0.40                 |
-| **Total**        | **~$25–35/month**      |
+```
+Portfolio/
+├── src/
+│   ├── app/
+│   │   ├── api/chat/route.ts       # AI chatbot API (rate-limited)
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── globals.css
+│   ├── components/
+│   │   ├── Navbar.tsx
+│   │   ├── Hero.tsx
+│   │   ├── About.tsx
+│   │   ├── Skills.tsx
+│   │   ├── Experience.tsx
+│   │   ├── Projects.tsx
+│   │   ├── Certifications.tsx
+│   │   ├── Contact.tsx
+│   │   ├── Footer.tsx
+│   │   └── Chatbot.tsx
+│   ├── lib/
+│   │   ├── portfolio-data.ts       # ← Your content here
+│   │   ├── skills-data.ts          # Skills with icons + URLs
+│   │   └── utils.ts
+│   └── __tests__/
+├── e2e/
+│   └── portfolio.spec.ts
+├── public/
+│   ├── avatar.jpeg
+│   └── resume.pdf
+├── .github/workflows/ci.yml        # Lint + test CI
+└── .env.local                       # API keys (not committed)
+```
 
-Anthropic Claude 3 Haiku: ~$0.50–2/month for typical portfolio traffic.
+---
 
-> **Tip:** To reduce costs, you can scale ECS to 0 tasks during off-hours using scheduled scaling.
+## Scripts
+
+| Command                | Description                    |
+|------------------------|--------------------------------|
+| `npm run dev`          | Dev server (Turbopack)         |
+| `npm run build`        | Production build               |
+| `npm run start`        | Production server              |
+| `npm run lint`         | ESLint                         |
+| `npm test`            | Unit tests                     |
+| `npm run test:watch`   | Unit tests (watch)             |
+| `npm run test:coverage`| Unit tests + coverage          |
+| `npm run test:e2e`     | Playwright E2E tests           |
+| `npm run test:all`     | All tests                      |
+
+---
+
+## Cost
+
+| Service           | Monthly Cost |
+|-------------------|--------------|
+| Vercel hosting    | **$0** (free tier) |
+| OpenAI GPT-4o-mini| ~$0.50–2 (portfolio traffic) |
+| **Total**         | **~$0–2/month** |
 
 ---
 

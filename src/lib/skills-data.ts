@@ -41,6 +41,7 @@ export const skillCategories: SkillCategory[] = [
       { name: 'CSS3/Sass',     icon: devicon('sass'),               url: 'https://sass-lang.com' },
       { name: 'Vite',          icon: devicon('vitejs'),             url: 'https://vitejs.dev' },
       { name: 'Storybook',     icon: devicon('storybook'),          url: 'https://storybook.js.org' },
+      { name: 'Framer Motion', icon: devicon('framermotion'),      url: 'https://www.framer.com/motion/' },
     ],
   },
   {
@@ -105,6 +106,17 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Figma',       icon: devicon('figma'),                url: 'https://www.figma.com' },
       { name: 'Keycloak',    icon: 'https://www.keycloak.org/resources/images/icon.svg', url: 'https://www.keycloak.org' },
       { name: 'Git',         icon: devicon('git'),                  url: 'https://git-scm.com' },
+    ],
+  },
+  {
+    key: 'specializations',
+    label: 'Specializations',
+    emoji: '🎯',
+    skills: [
+      { name: 'Distributed Systems',            icon: '', url: '' },
+      { name: 'High-Availability Architecture', icon: '', url: '' },
+      { name: 'Latency Optimization',           icon: '', url: '' },
+      { name: 'Embedded Systems',               icon: '', url: '' },
     ],
   },
 ]

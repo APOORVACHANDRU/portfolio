@@ -4,6 +4,20 @@ import Image from 'next/image'
 import { skillCategories, type Skill } from '@/lib/skills-data'
 
 function SkillBadge({ skill }: { skill: Skill }) {
+  // Non-clickable badge for items without a URL (e.g. specializations)
+  if (!skill.url) {
+    return (
+      <span
+        className="flex items-center gap-2 px-3 py-2 rounded-lg
+                   bg-dark-muted/50 border border-dark-border"
+      >
+        <span className="text-xs font-medium text-gray-300 whitespace-nowrap">
+          {skill.name}
+        </span>
+      </span>
+    )
+  }
+
   return (
     <a
       href={skill.url}
@@ -15,16 +29,18 @@ function SkillBadge({ skill }: { skill: Skill }) {
                  hover:border-primary-600/50 hover:bg-primary-600/10
                  transition-all duration-200 hover:scale-105"
     >
-      <div className="relative w-5 h-5 flex-shrink-0">
-        <Image
-          src={skill.icon}
-          alt={`${skill.name} icon`}
-          fill
-          sizes="20px"
-          className="object-contain"
-          unoptimized // CDN SVGs don't need Next.js optimization
-        />
-      </div>
+      {skill.icon && (
+        <div className="relative w-5 h-5 flex-shrink-0">
+          <Image
+            src={skill.icon}
+            alt={`${skill.name} icon`}
+            fill
+            sizes="20px"
+            className="object-contain"
+            unoptimized
+          />
+        </div>
+      )}
       <span className="text-xs font-medium text-gray-300 group-hover:text-white transition-colors whitespace-nowrap">
         {skill.name}
       </span>
@@ -44,10 +60,10 @@ export default function Skills() {
           Click any skill to visit its official documentation.
         </p>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="space-y-6">
           {skillCategories.map((category) => (
-            <div key={category.key} className="card">
-              <h3 className="text-sm font-semibold text-gray-400 mb-4 flex items-center gap-2">
+            <div key={category.key}>
+              <h3 className="text-sm font-semibold text-gray-400 mb-3 flex items-center gap-2 uppercase">
                 <span>{category.emoji}</span>
                 {category.label}
               </h3>

@@ -6,11 +6,12 @@ import { cn } from '@/lib/utils'
 import { portfolioData } from '@/lib/portfolio-data'
 
 const navLinks = [
-  { label: 'About',      href: '#about'      },
-  { label: 'Skills',     href: '#skills'     },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects',   href: '#projects'   },
-  { label: 'Contact',    href: '#contact'    },
+  { label: 'About',          href: '#about'          },
+  { label: 'Skills',         href: '#skills'         },
+  { label: 'Experience',     href: '#experience'     },
+  { label: 'Projects',       href: '#projects'       },
+  { label: 'Certifications', href: '#certifications' },
+  { label: 'Contact',        href: '#contact'        },
 ]
 
 export default function Navbar() {

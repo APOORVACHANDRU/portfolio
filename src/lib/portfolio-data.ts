@@ -106,6 +106,13 @@ When I'm not coding, I'm contributing to open source, writing technical articles
     },
   ],
 
+  certifications: [
+    { name: 'AWS Certified Cloud Practitioner',       date: 'Jan 2024', url: 'https://www.credly.com/badges/YOUR_BADGE_ID' },
+    { name: 'AWS Certified Solutions Architect',      date: 'Mar 2024', url: 'https://www.credly.com/badges/YOUR_BADGE_ID' },
+    { name: 'Meta Front-End Developer Certificate',   date: 'Jun 2023', url: 'https://www.coursera.org/account/accomplishments/YOUR_ID' },
+    { name: 'Docker Certified Associate',             date: 'Sep 2023', url: 'https://www.credly.com/badges/YOUR_BADGE_ID' },
+  ],
+
   // This is fed to the AI chatbot as context
   chatbotContext: `
 You are an AI assistant on Apoorva Chandrashekar's developer portfolio website.
