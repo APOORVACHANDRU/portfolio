@@ -1,18 +1,21 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, Calendar, Clock, ArrowRight } from 'lucide-react'
-import { blogPosts } from '@/lib/blog-data'
+import { getBlogs } from '@/lib/db/queries'
 import type { Metadata } from 'next'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Blog | Apoorva Chandrashekar',
   description: 'Technical articles on React, Next.js, TypeScript, AWS, AI, and full-stack development.',
 }
 
-export default function BlogsPage() {
+export default async function BlogsPage() {
+  const blogPosts = await getBlogs()
+
   return (
     <div className="min-h-screen bg-dark-bg">
-      {/* Header */}
       <header className="border-b border-dark-border">
         <div className="container-max section-padding py-0">
           <div className="flex items-center justify-between h-16">
@@ -27,12 +30,9 @@ export default function BlogsPage() {
         </div>
       </header>
 
-      {/* Content */}
       <main className="section-padding">
         <div className="container-max max-w-4xl">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-            Blog
-          </h1>
+          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">Blog</h1>
           <p className="text-gray-500 text-lg mb-12">
             Technical articles on web development, cloud architecture, and personal growth.
           </p>
@@ -51,7 +51,6 @@ export default function BlogsPage() {
                              transition-all duration-300 hover:translate-x-1 p-0"
                 >
                   <div className="flex flex-col sm:flex-row">
-                    {/* Cover image — left side */}
                     {post.coverImage && (
                       <div className="relative w-full sm:w-56 lg:w-64 h-48 sm:h-auto flex-shrink-0">
                         <Image
@@ -64,8 +63,6 @@ export default function BlogsPage() {
                         />
                       </div>
                     )}
-
-                    {/* Content — right side */}
                     <div className="p-6 flex-1">
                       <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500 mb-3">
                         <span className="flex items-center gap-1">
@@ -79,15 +76,10 @@ export default function BlogsPage() {
                           {post.readingTime}
                         </span>
                       </div>
-
                       <h2 className="text-xl font-semibold text-white group-hover:text-primary-400 transition-colors mb-2">
                         {post.title}
                       </h2>
-
-                      <p className="text-gray-400 text-sm leading-relaxed mb-4">
-                        {post.excerpt}
-                      </p>
-
+                      <p className="text-gray-400 text-sm leading-relaxed mb-4">{post.excerpt}</p>
                       <div className="flex items-center justify-between">
                         <div className="flex flex-wrap gap-2">
                           {post.tags.map((tag) => (

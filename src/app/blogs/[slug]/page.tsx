@@ -1,20 +1,18 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, Calendar, Clock } from 'lucide-react'
-import { blogPosts } from '@/lib/blog-data'
+import { getBlogBySlug, getBlogs } from '@/lib/db/queries'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+
+export const dynamic = 'force-dynamic'
 
 interface Props {
   params: { slug: string }
 }
 
-export async function generateStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }))
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = blogPosts.find((p) => p.slug === params.slug)
+  const post = await getBlogBySlug(params.slug)
   if (!post) return { title: 'Not Found' }
 
   return {
@@ -23,8 +21,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function BlogPostPage({ params }: Props) {
-  const post = blogPosts.find((p) => p.slug === params.slug)
+export default async function BlogPostPage({ params }: Props) {
+  const post = await getBlogBySlug(params.slug)
 
   if (!post) {
     notFound()
@@ -32,7 +30,6 @@ export default function BlogPostPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-dark-bg">
-      {/* Header */}
       <header className="border-b border-dark-border">
         <div className="container-max section-padding py-0">
           <div className="flex items-center justify-between h-16">
@@ -47,7 +44,6 @@ export default function BlogPostPage({ params }: Props) {
         </div>
       </header>
 
-      {/* Cover image */}
       {post.coverImage && (
         <div className="relative w-full h-64 sm:h-80 lg:h-96">
           <Image
@@ -63,11 +59,9 @@ export default function BlogPostPage({ params }: Props) {
         </div>
       )}
 
-      {/* Article */}
       <main className={post.coverImage ? '-mt-24 relative z-10' : ''}>
         <div className="section-padding">
           <article className="container-max max-w-3xl">
-            {/* Meta */}
             <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500 mb-4">
               <span className="flex items-center gap-1">
                 <Calendar className="w-3.5 h-3.5" />
@@ -81,19 +75,16 @@ export default function BlogPostPage({ params }: Props) {
               </span>
             </div>
 
-            {/* Title */}
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4 leading-tight">
               {post.title}
             </h1>
 
-            {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-10">
               {post.tags.map((tag) => (
                 <span key={tag} className="tag text-xs">{tag}</span>
               ))}
             </div>
 
-            {/* Content */}
             <div className="space-y-4">
               {post.content.split('\n').map((line, i) => {
                 const trimmed = line.trim()
@@ -116,7 +107,6 @@ export default function BlogPostPage({ params }: Props) {
               })}
             </div>
 
-            {/* Back link */}
             <div className="mt-16 pt-8 border-t border-dark-border">
               <Link
                 href="/blogs"
@@ -133,7 +123,6 @@ export default function BlogPostPage({ params }: Props) {
   )
 }
 
-// Simple inline formatting (bold + code)
 function renderInline(text: string) {
   const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`)/)
   return parts.map((part, i) => {

@@ -1,27 +1,31 @@
 'use client'
 
 import { Briefcase } from 'lucide-react'
-import { portfolioData } from '@/lib/portfolio-data'
 
-export default function Experience() {
-  const { experience } = portfolioData
+interface ExperienceItem {
+  _id:         string
+  company:     string
+  role:        string
+  period:      string
+  description: string | string[]
+  tech:        string[]
+}
 
+export default function Experience({ data }: { data: ExperienceItem[] }) {
   return (
     <section id="experience" className="section-padding bg-dark-surface/50">
       <div className="container-max">
-        <p className="text-primary-400 font-mono text-sm mb-3">Experience</p>
+        <p className="text-primary-400 font-mono text-sm mb-3">03. experience</p>
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12">
           Where I&apos;ve worked
         </h2>
 
         <div className="relative">
-          {/* Timeline line */}
           <div className="absolute left-6 top-0 bottom-0 w-px bg-dark-border hidden sm:block" />
 
           <div className="space-y-8">
-            {experience.map((job, index) => (
-              <div key={index} className="relative sm:pl-16">
-                {/* Timeline dot */}
+            {data.map((job) => (
+              <div key={job._id} className="relative sm:pl-16">
                 <div className="absolute left-4 top-6 w-4 h-4 rounded-full bg-primary-600 border-2 border-dark-bg hidden sm:block" />
 
                 <div className="card hover:translate-x-1 transition-transform duration-300">

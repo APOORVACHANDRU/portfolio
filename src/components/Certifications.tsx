@@ -1,15 +1,19 @@
 'use client'
 
 import { Award, ExternalLink } from 'lucide-react'
-import { portfolioData } from '@/lib/portfolio-data'
 
-export default function Certifications() {
-  const { certifications } = portfolioData
+interface CertificationItem {
+  _id:  string
+  name: string
+  date: string
+  url:  string
+}
 
+export default function Certifications({ data }: { data: CertificationItem[] }) {
   return (
     <section id="certifications" className="section-padding">
       <div className="container-max">
-        <p className="text-primary-400 font-mono text-sm mb-3">Certifications</p>
+        <p className="text-primary-400 font-mono text-sm mb-3">06. certifications</p>
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
           Certifications
         </h2>
@@ -18,13 +22,13 @@ export default function Certifications() {
         </p>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {certifications.map((cert) => {
+          {data.map((cert) => {
             const hasLink = cert.url && cert.url.length > 0
 
             if (hasLink) {
               return (
                 <a
-                  key={cert.name}
+                  key={cert._id}
                   href={cert.url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -47,10 +51,7 @@ export default function Certifications() {
             }
 
             return (
-              <div
-                key={cert.name}
-                className="card flex items-start gap-4"
-              >
+              <div key={cert._id} className="card flex items-start gap-4">
                 <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary-600/20 border border-primary-600/30
                                 flex items-center justify-center">
                   <Award className="w-5 h-5 text-primary-400" />

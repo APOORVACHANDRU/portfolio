@@ -2,8 +2,17 @@
 
 import { useState } from 'react'
 import { ExternalLink, Star } from 'lucide-react'
-import { portfolioData, type Project } from '@/lib/portfolio-data'
 import { cn } from '@/lib/utils'
+
+interface ProjectItem {
+  _id:         string
+  title:       string
+  description: string
+  tech:        string[]
+  github:      string | null
+  live:        string | null
+  featured:    boolean
+}
 
 const GithubIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true">
@@ -11,7 +20,7 @@ const GithubIcon = () => (
   </svg>
 )
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project }: { project: ProjectItem }) {
   return (
     <div className={cn(
       'card flex flex-col h-full group',
@@ -45,7 +54,6 @@ function ProjectCard({ project }: { project: Project }) {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors"
-            aria-label={`${project.title} GitHub`}
           >
             <GithubIcon />
             Code
@@ -57,7 +65,6 @@ function ProjectCard({ project }: { project: Project }) {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-primary-400 transition-colors"
-            aria-label={`${project.title} live demo`}
           >
             <ExternalLink className="w-4 h-4" />
             Live Demo
@@ -68,45 +75,38 @@ function ProjectCard({ project }: { project: Project }) {
   )
 }
 
-export default function Projects() {
+export default function Projects({ data }: { data: ProjectItem[] }) {
   const [showAll, setShowAll] = useState(false)
-  const { projects } = portfolioData
 
-  const featured = projects.filter((p) => p.featured)
-  const others   = projects.filter((p) => !p.featured)
+  const featured = data.filter((p) => p.featured)
+  const others   = data.filter((p) => !p.featured)
   const displayed = showAll ? others : []
 
   return (
     <section id="projects" className="section-padding">
       <div className="container-max">
-        <p className="text-primary-400 font-mono text-sm mb-3">Projects</p>
+        <p className="text-primary-400 font-mono text-sm mb-3">04. projects</p>
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12">
           Things I&apos;ve built
         </h2>
 
-        {/* Featured projects */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {featured.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+            <ProjectCard key={project._id} project={project} />
           ))}
         </div>
 
-        {/* Other projects toggle */}
         {others.length > 0 && (
           <>
             <div className="text-center mb-8">
-              <button
-                onClick={() => setShowAll(!showAll)}
-                className="btn-secondary"
-              >
+              <button onClick={() => setShowAll(!showAll)} className="btn-secondary">
                 {showAll ? 'Show Less' : `Show ${others.length} More Projects`}
               </button>
             </div>
-
             {showAll && (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {displayed.map((project) => (
-                  <ProjectCard key={project.title} project={project} />
+                  <ProjectCard key={project._id} project={project} />
                 ))}
               </div>
             )}
